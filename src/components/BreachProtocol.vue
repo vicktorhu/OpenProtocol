@@ -12,10 +12,16 @@ import global from "./global";
 export default defineComponent({
   components: { BreachProtocolCell },
   mounted () {
-      
+      global.mutations.generateRandomCells(5);
+  },
+  methods: {
+      name() {
+          
+      }
   },
   setup() {
     const cells = global.state.cells;
+    // global.generateRandomCells();
     return { cells };
   },
 });

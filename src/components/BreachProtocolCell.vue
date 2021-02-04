@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn color="primary" label="OK" @click="onClick" />
+    <q-btn color="primary" label="OK"/>
   </div>
 </template>
 
