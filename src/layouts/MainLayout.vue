@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Todo Vue 3 Typescript Demo App
+          Open Protocol v0.1
         </q-toolbar-title>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->

@@ -1,34 +1,60 @@
 import { reactive } from "@vue/composition-api";
 
+// enum Direction {
+//   Horizontal,
+//   Vertical
+// }
+
 const state = reactive({
-  list: [
-    { id: 1, text: "Call the client", done: true },
-    { id: 2, text: "Prepare for monday meeting", done: false },
-    { id: 3, text: "Fix the bug on User.ts module", done: false }
-  ],
-  lastid: 3,
-  pool: [],
-  cells: [],
+  direction: true as Boolean, // true = horizontal, false = vertical
+  lastClicked: {
+    x: 0 as Number,
+    y: 0 as Number
+  },
+  pool: new Array<String>(),
+  cells: new Array(),
+  output: new Array<String>()
 });
 
 const mutations = {
-  generateNumberPool: function(size:Number){
-
-  },
-  generateRandomCells: function(size: number) {
+  generateCellPool(size: Number) {
     for (let i = 0; i < size; i++) {
-      let row:String[] = [];
+      state.pool.push(
+        Math.round(Math.random() * 239 + 16)
+          .toString(16)
+          .toUpperCase()
+      );
+    }
+  },
+  generateRandomCells(size: number, poolSize: Number) {
+    this.generateCellPool(poolSize);
+    for (let i = 0; i < size; i++) {
+      let row: String[] = [];
       for (let j = 0; j < size; j++) {
-        // let randomNumber = Math.random()*255;
-
-        row.push(Math.round(Math.random()*255).toString(16));
+        row.push(state.pool[Math.floor(Math.random() * state.pool.length)]);
       }
       state.cells.push(row);
     }
-    
+
     state.cells.forEach(cell => {
       console.log(cell);
     });
+  },
+  generateProblems() {},
+  appendOutput(input: String) {
+    state.output.push(input);
+  },
+  setLastClicked(x: Number, y: Number) {
+    state.lastClicked.x = x;
+    state.lastClicked.y = y;
+  },
+  changeDirection() {
+    // if (state.direction == Direction.Horizontal) {
+    //   state.direction = Direction.Vertical;
+    // } else {
+    //   state.direction = Direction.Horizontal;
+    // }
+    state.direction = !state.direction;
   }
 };
 
