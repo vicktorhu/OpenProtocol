@@ -17,6 +17,14 @@ const state = reactive({
 });
 
 const mutations = {
+  cleanCells() {
+    state.direction = true;
+    state.lastClicked.x = 0;
+    state.lastClicked.y = 0;
+    state.pool = [];
+    state.cells = [];
+    state.output = [];
+  },
   generateCellPool(size: Number) {
     for (let i = 0; i < size; i++) {
       state.pool.push(
@@ -27,6 +35,7 @@ const mutations = {
     }
   },
   generateRandomCells(size: number, poolSize: Number) {
+    // this.cleanCells();
     this.generateCellPool(poolSize);
     for (let i = 0; i < size; i++) {
       let row: String[] = [];

@@ -50,16 +50,16 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Home',
+    title: 'Breach Protocol',
     // caption: 'Home Screen',
     icon: 'home',
     link: '/#/'
   },
   {
-    title: 'Todo list',
+    title: 'About',
     // caption: 'Todo List App',
     icon: 'list',
-    link: '/#/todolist'
+    link: '/#/about'
   },
 ];
 
