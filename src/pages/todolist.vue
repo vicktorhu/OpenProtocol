@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import global from "components/global";
-import TodoItem from "components/TodoItem";
+import TodoItem from "components/TodoItem.vue";
 export default defineComponent({
   components: {
     TodoItem,

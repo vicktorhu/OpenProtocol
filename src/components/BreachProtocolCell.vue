@@ -1,15 +1,16 @@
 <template>
   <div>
-    <breach-protocol></breach-protocol>
+    <q-btn color="primary" label="OK" @click="onClick" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import BreachProtocol from "components/BreachProtocol.vue";
 
 export default defineComponent({
-  components: { BreachProtocol },
+  setup() {
+    return {};
+  },
 });
 </script>
 

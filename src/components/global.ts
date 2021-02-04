@@ -7,6 +7,7 @@ const state = reactive({
       {id: 3, text: "Fix the bug on User.ts module", done: false},
   ],
   lastid: 3,
+  cells: [],
 });
 
 function deleteTask(id: number){
