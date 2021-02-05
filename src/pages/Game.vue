@@ -1,14 +1,15 @@
 <template>
-  <div>About</div>
+  <div>
+    <breach-protocol></breach-protocol>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
+import BreachProtocol from "components/BreachProtocol.vue";
 
 export default defineComponent({
-  setup() {
-    return {};
-  },
+  components: { BreachProtocol },
 });
 </script>
 

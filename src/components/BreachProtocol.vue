@@ -7,7 +7,7 @@
         </td>
       </tr>
     </table>
-    {{ output }} <br />
+    {{ buffer }} <br />
     {{ direction }} <br />
     {{ pool }} <br />
     {{ lastClicked }} <br />
@@ -15,22 +15,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, computed } from "@vue/composition-api";
 import BreachProtocolCell from "./BreachProtocolCell.vue";
 import global from "./global";
 
 export default defineComponent({
   components: { BreachProtocolCell },
   setup() {
-    const cells = global.state.cells;
-    const output = global.state.output;
-    let direction = global.state.direction;
+    const buffer = global.state.buffer;
     const pool = global.state.pool;
     const lastClicked = global.state.lastClicked;
 
-    global.mutations.generateRandomCells(5, 5);
+    const direction = computed(() => {
+      return global.state.direction;
+    });
 
-    return { cells, output, direction, pool, lastClicked };
+    const cells = computed(() => {
+      return global.state.cells;
+    });
+
+    global.mutations.generateRandomCells();
+
+    return { cells, buffer, direction, pool, lastClicked };
   },
 });
 </script>

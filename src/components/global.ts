@@ -1,31 +1,32 @@
 import { reactive } from "@vue/composition-api";
 
-// enum Direction {
-//   Horizontal,
-//   Vertical
-// }
+const config = reactive({
+  bufferSize: 8 as number,
+  poolSize: 4 as number,
+  cellSize: 6 as number
+});
 
 const state = reactive({
-  direction: true as Boolean, // true = horizontal, false = vertical
+  direction: true as boolean, // true = horizontal, false = vertical
   lastClicked: {
-    x: 0 as Number,
-    y: 0 as Number
+    x: 0 as number,
+    y: 0 as number
   },
-  pool: new Array<String>(),
+  pool: new Array<string>(),
   cells: new Array(),
-  output: new Array<String>()
+  buffer: new Array<string>()
 });
 
 const mutations = {
-  cleanCells() {
+  cleanCells(): void {
     state.direction = true;
     state.lastClicked.x = 0;
     state.lastClicked.y = 0;
     state.pool = [];
     state.cells = [];
-    state.output = [];
+    state.buffer = [];
   },
-  generateCellPool(size: Number) {
+  generateCellPool(size: number): void {
     for (let i = 0; i < size; i++) {
       state.pool.push(
         Math.round(Math.random() * 239 + 16)
@@ -34,11 +35,13 @@ const mutations = {
       );
     }
   },
-  generateRandomCells(size: number, poolSize: Number) {
-    // this.cleanCells();
+  generateRandomCells(): void {
+    this.cleanCells();
+    let size = config.cellSize;
+    let poolSize = config.poolSize;
     this.generateCellPool(poolSize);
     for (let i = 0; i < size; i++) {
-      let row: String[] = [];
+      let row: string[] = [];
       for (let j = 0; j < size; j++) {
         row.push(state.pool[Math.floor(Math.random() * state.pool.length)]);
       }
@@ -49,15 +52,15 @@ const mutations = {
       console.log(cell);
     });
   },
-  generateProblems() {},
-  appendOutput(input: String) {
-    state.output.push(input);
+  generateProblems(): void {},
+  appendOutput(input: string): void {
+    state.buffer.push(input);
   },
-  setLastClicked(x: Number, y: Number) {
+  setLastClicked(x: number, y: number): void {
     state.lastClicked.x = x;
     state.lastClicked.y = y;
   },
-  changeDirection() {
+  changeDirection(): void {
     // if (state.direction == Direction.Horizontal) {
     //   state.direction = Direction.Vertical;
     // } else {
@@ -67,4 +70,4 @@ const mutations = {
   }
 };
 
-export default { state, mutations };
+export default { config, state, mutations };

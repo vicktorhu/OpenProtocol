@@ -1,12 +1,15 @@
 <template>
   <div>
     <!-- <q-btn color="primary" :label="label" @click="click" :disable="disabled" /> -->
-    <div class="cell" :class="'cell-' + state" @click="click">{{ label }}</div>
+    <div class="cell" :class="'cell-' + state" @click="clickCell">
+      <span v-if="!disabled">{{ label }}</span>
+      <span v-else>{{'[ &nbsp; ]'}}</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, computed, ref } from "@vue/composition-api";
 import global from "./global";
 
 export default defineComponent({
@@ -20,56 +23,50 @@ export default defineComponent({
       default: 0,
     },
   },
-  computed: {
-    state() {
-      // state {0,1,2} = {normal,highlighted,used} may change to enums later
+  setup(props) {
+    const label: string = global.state.cells[props.x][props.y];
+    let disabled = ref<Boolean>(false);
 
-      let state: Number = 0;
-
-      if (!this.disabled) {
+    const state = computed(() => {
+      if (!disabled.value) {
         if (global.state.direction) {
-          if (this.y == global.state.lastClicked.y) {
-            state = 1;
+          if (props.y == global.state.lastClicked.y) {
+            return 1;
+          } else {
+            return 0;
           }
         } else {
-          if (this.x == global.state.lastClicked.x) {
-            state = 1;
+          if (props.x == global.state.lastClicked.x) {
+            return 1;
+          } else {
+            return 0;
           }
         }
       } else {
-        state = 2;
+        return 2;
       }
+    });
 
-      return state;
-    },
-  },
-  setup(props) {
-    const label: String = global.state.cells[props.x][props.y];
-    let disabled: Boolean = false;
-
-    return { label, disabled };
-  },
-  methods: {
-    click() {
-      if (!this.disabled) {
-        global.mutations.appendOutput(this.label);
+    const clickCell = () => {
+      if (!disabled.value && state.value == 1) {
+        global.mutations.appendOutput(label);
         global.mutations.changeDirection();
-        global.mutations.setLastClicked(this.x, this.y);
-        this.disabled = true;
+        global.mutations.setLastClicked(props.x, props.y);
+        disabled.value = true;
       }
-    },
+    };
+
+    return { label, disabled, state, clickCell };
   },
 });
 </script>
 
 <style lang="scss" scoped>
 .cell {
-  // width: 40px;
-  // height: 40px;
   padding: 20px;
   text-align: center;
-  // background-color: darkred;
   border: 1px solid red;
+  cursor: pointer;
 }
 .cell-0 {
   background-color: #222;
