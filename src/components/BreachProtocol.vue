@@ -11,32 +11,35 @@
     {{ direction }} <br />
     {{ pool }} <br />
     {{ lastClicked }} <br />
+    {{ gameStatus }} <br />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "@vue/composition-api";
+import { defineComponent, computed, watch } from "@vue/composition-api";
 import BreachProtocolCell from "./BreachProtocolCell.vue";
 import global from "./global";
 
 export default defineComponent({
   components: { BreachProtocolCell },
   setup() {
-    const buffer = global.state.buffer;
     const pool = global.state.pool;
-    const lastClicked = global.state.lastClicked;
 
-    const direction = computed(() => {
-      return global.state.direction;
-    });
-
-    const cells = computed(() => {
-      return global.state.cells;
-    });
+    const buffer = computed(() => global.state.buffer);
+    const lastClicked = computed(() => global.state.lastClicked);
+    const direction = computed(() => global.state.direction);
+    const cells = computed(() => global.state.cells);
+    const gameStatus = computed(() => global.mutations.gameStatus());
 
     global.mutations.generateRandomCells();
 
-    return { cells, buffer, direction, pool, lastClicked };
+    watch(gameStatus, (newValue, oldValue) => {
+      if (!newValue) {
+        console.log("game over");
+      }
+    });
+
+    return { cells, buffer, direction, pool, lastClicked, gameStatus };
   },
 });
 </script>

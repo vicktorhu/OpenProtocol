@@ -1,7 +1,7 @@
 import { reactive } from "@vue/composition-api";
 
 const config = reactive({
-  bufferSize: 8 as number,
+  bufferSize: 5 as number,
   poolSize: 4 as number,
   cellSize: 6 as number
 });
@@ -47,10 +47,6 @@ const mutations = {
       }
       state.cells.push(row);
     }
-
-    state.cells.forEach(cell => {
-      console.log(cell);
-    });
   },
   generateProblems(): void {},
   appendOutput(input: string): void {
@@ -67,6 +63,13 @@ const mutations = {
     //   state.direction = Direction.Horizontal;
     // }
     state.direction = !state.direction;
+  },
+  gameStatus(): boolean {
+    if (state.buffer.length >= config.bufferSize) {
+      return false;
+    } else {
+      return true;
+    }
   }
 };
 

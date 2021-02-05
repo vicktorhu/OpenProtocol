@@ -3,7 +3,7 @@
     <!-- <q-btn color="primary" :label="label" @click="click" :disable="disabled" /> -->
     <div class="cell" :class="'cell-' + state" @click="clickCell">
       <span v-if="!disabled">{{ label }}</span>
-      <span v-else>{{'[ &nbsp; ]'}}</span>
+      <span v-else>{{ "[ &nbsp; ]" }}</span>
     </div>
   </div>
 </template>
@@ -27,16 +27,19 @@ export default defineComponent({
     const label: string = global.state.cells[props.x][props.y];
     let disabled = ref<Boolean>(false);
 
+    const direction = computed(() => global.state.direction);
+    const lastClicked = computed(() => global.state.lastClicked);
+
     const state = computed(() => {
       if (!disabled.value) {
-        if (global.state.direction) {
-          if (props.y == global.state.lastClicked.y) {
+        if (direction.value) {
+          if (props.y == lastClicked.value.y) {
             return 1;
           } else {
             return 0;
           }
         } else {
-          if (props.x == global.state.lastClicked.x) {
+          if (props.x == lastClicked.value.x) {
             return 1;
           } else {
             return 0;
