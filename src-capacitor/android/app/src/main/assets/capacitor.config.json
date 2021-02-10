@@ -1,0 +1,10 @@
+{
+  "appId": "com.vicktorhu.openprotocol",
+  "appName": "Todo Vue 3 Typescript",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.2.21:8080"
+  }
+}

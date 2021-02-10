@@ -14,7 +14,7 @@ const state = reactive({
   },
   pool: new Array<string>(),
   cells: new Array(),
-  buffer: new Array<string>()
+  buffer: new Array<string>(),
 });
 
 const mutations = {
